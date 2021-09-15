@@ -74,13 +74,14 @@ inputs = {
 x = feature_layer(inputs)
 x = layers.Dense(32, activation = "relu")(x)
 x = layers.Dense(64, activation = "relu")(x)
+x = layers.Dense(32, activation = "relu")(x)
 outputs = layers.Dense(3, activation = "softmax")(x)
 
 from tensorflow import keras
 model = keras.Model(inputs = inputs, outputs = outputs)
 
 # Compile
-model.compile(optimizer = 'adam',
+model.compile(optimizer = tf.keras.optimizers.Adam(learning_rate = 0.0001),
               loss = tf.keras.losses.SparseCategoricalCrossentropy(),
               metrics = ['accuracy'])
 
@@ -88,6 +89,11 @@ model.compile(optimizer = 'adam',
 history = model.fit(ds_train, epochs = 500, validation_data = ds_val)
 
 model.summary()
+
+# History
+import matplotlib.pyplot as plt
+plt.plot(history.history['loss'])
+plt.plot(history.history['accuracy'])
 
 # Evaluate
 model.evaluate(ds_test)
