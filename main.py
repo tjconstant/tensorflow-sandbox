@@ -74,14 +74,14 @@ inputs = {
 x = feature_layer(inputs)
 x = layers.Dense(32, activation = "relu")(x)
 x = layers.Dense(64, activation = "relu")(x)
-outputs = layers.Dense(3, activation = "sigmoid")(x)
+outputs = layers.Dense(3, activation = "softmax")(x)
 
 from tensorflow import keras
-model = keras.Model(inputs=inputs, outputs=outputs)
+model = keras.Model(inputs = inputs, outputs = outputs)
 
 # Compile
 model.compile(optimizer = 'adam',
-              loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              loss = tf.keras.losses.SparseCategoricalCrossentropy(),
               metrics = ['accuracy'])
 
 # Fit
