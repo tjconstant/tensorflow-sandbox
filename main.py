@@ -89,4 +89,12 @@ history = model.fit(ds_train, epochs = 500, validation_data = ds_val)
 
 model.summary()
 
-model.predict(ds_test)
+# Evaluate
+model.evaluate(ds_test)
+predictions  = model.predict(ds_test)
+
+import numpy as np
+prediction_class = np.argmax(predictions, 1)
+truth = np.concatenate([y for x, y in ds_test], axis=0)
+
+tf.math.confusion_matrix(truth, prediction_class)
